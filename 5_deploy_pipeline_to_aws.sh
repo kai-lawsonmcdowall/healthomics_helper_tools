@@ -23,7 +23,7 @@ S3_PATH=${S3_PATH:-$DEFAULT_S3_PATH}
 CURRENT_DIR=$(pwd)
 PARENT_DIR=$(dirname "$CURRENT_DIR")
 
-# Create a ZIP file of the parent directory, excluding healthomics_helper_tools
+# Create a ZIP file of the parent directory, excluding healthomics_helper_tools and the .git
 ZIP_FILE="$ZIP_FILE_NAME.zip"
 echo "Creating ZIP file: $ZIP_FILE from the parent directory excluding healthomics_helper_tools"
 cd "$PARENT_DIR" || { echo "Failed to navigate to the parent directory"; exit 1; }

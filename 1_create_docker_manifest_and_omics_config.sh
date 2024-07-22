@@ -19,12 +19,20 @@ manifest_file=${manifest_file:-$default_manifest_file}
 read -p "Enter the AWS region (default: $default_region): " region
 region=${region:-$default_region}
 
+echo "inspect_nf.py in $script_dir/inspect_nf.py"
+echo "docker manifest file will be $manifest_file"
+echo "the public registry file is $public_registry_file"
+echo "the omics.config is $config_file"
+
+
 # Run the Python script with the specified and default paths
 python3 "$script_dir/inspect_nf.py" \
     --output-manifest-file "$manifest_file" \
     -n "$public_registry_file" \
     --output-config-file "$config_file" \
-    --region "$region"
+    --region "$region" \
+    $parent_dir
+    
 
 # Check if the omics.config file exists and update the nextflowVersion
 if [ -f "$config_file" ]; then

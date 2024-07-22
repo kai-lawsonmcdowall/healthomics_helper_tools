@@ -130,6 +130,7 @@ def create_parameters_json(nextflow_schema, nf_core_params_url, json_output_path
         "max_cpus",
         "max_memory",
         "max_time",
+        "max_multiqc_email_size",
         "help",
         "version",
         "publish_dir_mode",
@@ -150,6 +151,10 @@ def create_parameters_json(nextflow_schema, nf_core_params_url, json_output_path
         if key not in exclude_parameters
     }
 
+    # Use default output path if json_output_path is not provided
+    if not json_output_path:
+        json_output_path = os.path.join(parent_dir, "parameter-template.json")
+
     # Write the filtered data to a new JSON file
     with open(json_output_path, "w") as f:
         json.dump(final_data, f, indent=4)
@@ -169,7 +174,7 @@ def main():
         "URL of the nf-core parameters page of the workflow: "
     ).strip()
     json_output_path = input(
-        "Path to write the output JSON file containing extracted parameters: "
+        "Path to write the output JSON file containing extracted parameters (default: parent directory of script with filename parameter-template.json): "
     ).strip()
 
     create_parameters_json(nextflow_schema, nf_core_params_url, json_output_path)
