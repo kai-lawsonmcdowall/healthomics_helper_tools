@@ -44,3 +44,12 @@ aws omics create-workflow \
     --engine NEXTFLOW || { echo "Failed to create Omics workflow"; exit 1; }
 
 echo "Workflow created successfully."
+
+# Add "healthomics_helper_tools" to .gitignore in the parent directory if it doesn't already exist
+GITIGNORE_FILE="$PARENT_DIR/.gitignore"
+if ! grep -qx "healthomics_helper_tools" "$GITIGNORE_FILE"; then
+    echo "healthomics_helper_tools" >> "$GITIGNORE_FILE"
+    echo "healthomics_helper_tools added to the nf-core .gitignore"
+else
+    echo "healthomics_helper_tools already exists in the .gitignore"
+fi
