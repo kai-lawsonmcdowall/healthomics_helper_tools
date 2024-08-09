@@ -24,7 +24,6 @@ echo "docker manifest file will be $manifest_file"
 echo "the public registry file is $public_registry_file"
 echo "the omics.config is $config_file"
 
-
 # Run the Python script with the specified and default paths
 python3 "$script_dir/inspect_nf.py" \
     --output-manifest-file "$manifest_file" \
@@ -32,14 +31,17 @@ python3 "$script_dir/inspect_nf.py" \
     --output-config-file "$config_file" \
     --region "$region" \
     $parent_dir
-    
 
 # Check if the omics.config file exists and update the nextflowVersion
 if [ -f "$config_file" ]; then
-    echo "Updating the omics config to use nextflow version 23.10.0"
+    echo "Updating the omics.config to use nextflow version 23.10.0"
     sed -i 's/nextflowVersion = '\''!>=22.04.0'\''/nextflowVersion = '\''!>=23.10.0'\''/' "$config_file"
+
+    # Replace container registry in omics.config
+    echo "Replacing container registry in omics.config"
+    sed -i "s|container = 'biocontainers/|container = 'quay/biocontainers/|g" "$config_file"
 else
-    echo "Warning: $config_file not found. Skipping nextflow version update."
+    echo "Warning: $config_file not found. Skipping nextflow version update and container registry replacement."
 fi
 
 # Move the manifest file to the parent directory
@@ -48,6 +50,14 @@ if [ $? -eq 0 ]; then
     echo "Moved $manifest_file to $parent_dir"
 else
     echo "Failed to move $manifest_file to $parent_dir"
+fi
+
+# Modify the images_manifest.json to update container registry references
+if [ -f "$parent_dir/$manifest_file" ]; then
+    echo "Replacing container registry in images_manifest.json"
+    sed -i "s|biocontainers/|quay.io/biocontainers/|g" "$parent_dir/$manifest_file"
+else
+    echo "Warning: $manifest_file not found in $parent_dir. Skipping container registry replacement."
 fi
 
 # Comment out specific lines in nextflow.config if they exist
