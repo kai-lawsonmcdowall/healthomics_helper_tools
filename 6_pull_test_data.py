@@ -44,6 +44,17 @@ def prompt_and_replace(file_path, default_replacement):
     return search_string, replace_string
 
 
+def replace_in_file(file_path, search_string, replace_string):
+    """Replace all occurrences of search_string with replace_string in the given file."""
+    with open(file_path, "r") as file:
+        file_content = file.read()
+
+    new_content = file_content.replace(search_string, replace_string)
+
+    with open(file_path, "w") as file:
+        file.write(new_content)
+
+
 def main():
     script_dir = Path(os.getcwd()).resolve()
     parent_dir = script_dir.parent
@@ -80,28 +91,30 @@ def main():
         print(f"{test_full_config} not found!")
 
     # Run the copy_files functions with the user inputs
+    # if first_file and search_string_1:
+    #     print(
+    #         f'Calling copy_files with:\nfirst_file: "{first_file}"\nsearch_string_1: "{search_string_1}"\ndefault_replacement: "{default_replacement}"'
+    #     )
+    #     copy_files(first_file, search_string_1, default_replacement)
+
+    # if second_file and search_string_2:
+    #     print(
+    #         f'Calling copy_files with:\nsecond_file: "{second_file}"\nsearch_string_2: "{search_string_2}"\nreplace_string: "{replace_string}"'
+    #     )
+    #     copy_files(second_file, search_string_2, replace_string)
+
+    # Replace the search strings in the files before uploading
     if first_file and search_string_1:
-        print(
-            f'Calling copy_files with:\nfirst_file: "{first_file}"\nsearch_string_1: "{search_string_1}"\ndefault_replacement: "{default_replacement}"'
-        )
-        copy_files(first_file, search_string_1, default_replacement)
+        replace_in_file(first_file, search_string_1, default_replacement)
+        first_samplesheet_s3_path = default_replacement + os.path.basename(first_file)
+        print(f"Uploading {first_file} to {first_samplesheet_s3_path}")
+        upload_samplesheets(first_file, first_samplesheet_s3_path)
 
     if second_file and search_string_2:
-        print(
-            f'Calling copy_files with:\nsecond_file: "{second_file}"\nsearch_string_2: "{search_string_2}"\nreplace_string: "{replace_string}"'
-        )
-        copy_files(second_file, search_string_2, replace_string)
-
-    first_samplesheet_s3_path = default_replacement + os.path.basename(first_file)
-    second_samplesheet_s3_path = replace_string + os.path.basename(second_file)
-
-    print(f"uploading {first_file} to {first_samplesheet_s3_path}")
-    upload_samplesheets(first_file, first_samplesheet_s3_path)
-
-    print(f"uploading {first_file} to {second_samplesheet_s3_path}")
-    upload_samplesheets(second_file, second_samplesheet_s3_path)
-
-    # Modify the samplesheets based on user inputs
+        replace_in_file(second_file, search_string_2, replace_string)
+        second_samplesheet_s3_path = replace_string + os.path.basename(second_file)
+        print(f"Uploading {second_file} to {second_samplesheet_s3_path}")
+        upload_samplesheets(second_file, second_samplesheet_s3_path)
 
     print("Finished executing all tasks.")
 
