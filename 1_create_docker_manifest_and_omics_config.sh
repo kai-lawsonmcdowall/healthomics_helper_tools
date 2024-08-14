@@ -40,6 +40,10 @@ if [ -f "$config_file" ]; then
     # Replace container registry in omics.config
     echo "Replacing container registry in omics.config"
     sed -i "s|container = 'biocontainers/|container = 'quay/biocontainers/|g" "$config_file"
+
+    # Replace specific container registry reference
+    echo "Replacing nf-core/ubuntu:20.04 container in omics.config"
+    sed -i "s|container = 'nf-core/ubuntu:20.04'|container = 'quay/nf-core/ubuntu:20.04'|g" "$config_file"
 else
     echo "Warning: $config_file not found. Skipping nextflow version update and container registry replacement."
 fi
@@ -56,6 +60,18 @@ fi
 if [ -f "$parent_dir/$manifest_file" ]; then
     echo "Replacing container registry in images_manifest.json"
     sed -i "s|biocontainers/|quay.io/biocontainers/|g" "$parent_dir/$manifest_file"
+
+    # Replace specific container registry reference
+    echo "Replacing nf-core/ubuntu:20.04 in images_manifest.json"
+    sed -i "s|nf-core/ubuntu:20.04|quay.io/nf-core/ubuntu:20.04|g" "$parent_dir/$manifest_file"
+
+    # Replace redundant quay.io/quay.io/ with quay.io/
+    echo "Replacing redundant quay.io/quay.io/ with quay.io/ in images_manifest.json"
+    sed -i "s|quay.io/quay.io/|quay.io/|g" "$parent_dir/$manifest_file"
+
+    # Replace "ubuntu:20.04" with "quay.io/nf-core/ubuntu:20.04"
+    echo "Replacing ubuntu:20.04 with quay.io/nf-core/ubuntu:20.04 in images_manifest.json"
+    sed -i "s|ubuntu:20.04|quay.io/nf-core/ubuntu:20.04|g" "$parent_dir/$manifest_file"
 else
     echo "Warning: $manifest_file not found in $parent_dir. Skipping container registry replacement."
 fi
