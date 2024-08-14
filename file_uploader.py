@@ -1,4 +1,3 @@
-# %%
 import boto3
 import requests
 import pandas as pd
@@ -36,7 +35,7 @@ def copy_s3_file(src_url, dst_url):
     dst_bucket, dst_key = parse_s3_url(dst_url)
 
     copy_source = {"Bucket": src_bucket, "Key": src_key}
-    s3.copy_object(CopySource=copy_source, Bucket=dst_bucket, Key=dst_key)
+    s3.copy(CopySource=copy_source, Bucket=dst_bucket, Key=dst_key)
     print(f"Copied {src_url} to {dst_url}")
 
 
@@ -107,13 +106,3 @@ def upload_samplesheets(local_file_path, s3_url):
         print(f"File uploaded successfully to {s3_url}")
     except Exception as e:
         print(f"Error uploading file: {e}")
-
-
-# # %%
-# # Example usage
-# samplesheet_path = "/home/kai/cloud-health-omics/workflows/nf-core/workflows/atacseq/healthomics_helper_tools/samplesheet_test.csv"  # Update this with the actual path to your samplesheet
-# string1 = "https://raw.githubusercontent.com/nf-core/test-datasets/atacseq/testdata/"
-# string2 = "s3://dev-sonrai-data/omics_test/atacseq/"
-
-# copy_files(samplesheet_path, string1, string2)
-# # %%
