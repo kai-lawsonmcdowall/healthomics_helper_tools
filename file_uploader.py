@@ -43,14 +43,33 @@ def copy_files(samplesheet_path, string1, string2):
     # Load the samplesheet into a DataFrame
     df = pd.read_csv(samplesheet_path)
 
+    # Check if the required columns are present
+    required_columns = ["fastq_1", "fastq_2"]
+    missing_columns = [col for col in required_columns if col not in df.columns]
+
+    # If either or both columns are missing, prompt the user for alternative column names
+    if missing_columns:
+        print(f"{', '.join(missing_columns)} aren't present in the samplesheet.")
+        new_columns = input(
+            "Please provide the name(s) of the column(s) which contain the sample filepaths (comma separated): "
+        ).split(",")
+
+        # Ensure we have at most two columns and trim any whitespace
+        new_columns = [col.strip() for col in new_columns][:2]
+    else:
+        new_columns = required_columns
+
     # Collect all valid file URLs into a list
     file_urls = []
 
-    for col in ["fastq_1", "fastq_2"]:
-        col_files = df[col].dropna().tolist()  # Drop NaN values and convert to list
-        file_urls.extend(
-            [file for file in col_files if file.strip()]
-        )  # Append only non-empty strings
+    for col in new_columns:
+        if col in df.columns:
+            col_files = df[col].dropna().tolist()  # Drop NaN values and convert to list
+            file_urls.extend(
+                [file for file in col_files if file.strip()]
+            )  # Append only non-empty strings
+        else:
+            print(f"Column '{col}' not found in the samplesheet.")
 
     # Function to determine if a URL is an HTTP URL
     def is_http_url(url):

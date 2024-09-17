@@ -5,7 +5,7 @@ script_dir=$(dirname "$(readlink -f "$0")")
 parent_dir=$(dirname "$script_dir")
 
 # Default filenames and paths
-default_manifest_file="images_manifest.json"
+default_manifest_file="container_image_manifest.json"
 public_registry_file="$script_dir/public_registry_properties.json"
 config_file="$parent_dir/omics.config"
 nextflow_config_file="$parent_dir/nextflow.config"
@@ -56,21 +56,21 @@ else
     echo "Failed to move $manifest_file to $parent_dir"
 fi
 
-# Modify the images_manifest.json to update container registry references
+# Modify the container_image_manifest.json to update container registry references
 if [ -f "$parent_dir/$manifest_file" ]; then
-    echo "Replacing container registry in images_manifest.json"
+    echo "Replacing container registry in container_image_manifest.json"
     sed -i "s|biocontainers/|quay.io/biocontainers/|g" "$parent_dir/$manifest_file"
 
     # Replace specific container registry reference
-    echo "Replacing nf-core/ubuntu:20.04 in images_manifest.json"
+    echo "Replacing nf-core/ubuntu:20.04 in container_image_manifest.json"
     sed -i "s|nf-core/ubuntu:20.04|quay.io/nf-core/ubuntu:20.04|g" "$parent_dir/$manifest_file"
 
     # Replace redundant quay.io/quay.io/ with quay.io/
-    echo "Replacing redundant quay.io/quay.io/ with quay.io/ in images_manifest.json"
+    echo "Replacing redundant quay.io/quay.io/ with quay.io/ in container_image_manifest.json"
     sed -i "s|quay.io/quay.io/|quay.io/|g" "$parent_dir/$manifest_file"
 
     # Replace "ubuntu:20.04" with "quay.io/nf-core/ubuntu:20.04"
-    echo "Replacing ubuntu:20.04 with quay.io/nf-core/ubuntu:20.04 in images_manifest.json"
+    echo "Replacing ubuntu:20.04 with quay.io/nf-core/ubuntu:20.04 in container_image_manifest.json"
     sed -i "s|ubuntu:20.04|quay.io/nf-core/ubuntu:20.04|g" "$parent_dir/$manifest_file"
 else
     echo "Warning: $manifest_file not found in $parent_dir. Skipping container registry replacement."

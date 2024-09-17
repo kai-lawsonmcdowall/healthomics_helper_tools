@@ -4,7 +4,7 @@
 script_dir=$(dirname "$(readlink -f "$0")")
 parent_dir=$(dirname "$script_dir")
 omics_config_file="$parent_dir/omics.config"
-default_input_file="$parent_dir/images_manifest.json"
+default_input_file="$parent_dir/container_image_manifest.json"
 
 # Extract the AWS account ID and region from omics.config
 if [ -f "$omics_config_file" ]; then
@@ -29,8 +29,8 @@ if [ -z "$default_account_id" ] || [ -z "$default_region" ]; then
 fi
 
 # Prompt the user for the input file name, defaulting to the parent directory
-read -p "Enter the input file for the Step Functions execution (default: images_manifest.json): " input_file_name
-input_file_name=${input_file_name:-"images_manifest.json"}
+read -p "Enter the input file for the Step Functions execution (default: container_image_manifest.json): " input_file_name
+input_file_name=${input_file_name:-"container_image_manifest.json"}
 input_file="$parent_dir/$input_file_name"
 
 # Check if the input file exists

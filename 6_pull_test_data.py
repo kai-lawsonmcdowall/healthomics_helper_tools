@@ -34,10 +34,12 @@ def get_file_from_config(config_file):
 def prompt_and_replace(file_path, default_replacement):
     """Prompt user for strings to replace in the given file."""
     print(f"Processing file: {file_path}")
-    search_string = input("Enter the filepath you want to change: ")
+    search_string = input(
+        "Enter the filepath of the samples in the samplesheet you want to change: "
+    )
     replace_string = (
         input(
-            f"Enter the string you want to replace it with (default: {default_replacement}): "
+            f"Enter the string you want to replace it with (default (initially empty): {default_replacement}): "
         )
         or default_replacement
     )
@@ -91,17 +93,17 @@ def main():
         print(f"{test_full_config} not found!")
 
     # Run the copy_files functions with the user inputs
-    # if first_file and search_string_1:
-    #     print(
-    #         f'Calling copy_files with:\nfirst_file: "{first_file}"\nsearch_string_1: "{search_string_1}"\ndefault_replacement: "{default_replacement}"'
-    #     )
-    #     copy_files(first_file, search_string_1, default_replacement)
+    if first_file and search_string_1:
+        print(
+            f'Calling copy_files with:\nfirst_file: "{first_file}"\nsearch_string_1: "{search_string_1}"\ndefault_replacement: "{default_replacement}"'
+        )
+        copy_files(first_file, search_string_1, default_replacement)
 
-    # if second_file and search_string_2:
-    #     print(
-    #         f'Calling copy_files with:\nsecond_file: "{second_file}"\nsearch_string_2: "{search_string_2}"\nreplace_string: "{replace_string}"'
-    #     )
-    #     copy_files(second_file, search_string_2, replace_string)
+    if second_file and search_string_2:
+        print(
+            f'Calling copy_files with:\nsecond_file: "{second_file}"\nsearch_string_2: "{search_string_2}"\nreplace_string: "{replace_string}"'
+        )
+        copy_files(second_file, search_string_2, replace_string)
 
     # Replace the search strings in the files before uploading
     if first_file and search_string_1:
