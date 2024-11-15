@@ -59,19 +59,19 @@ fi
 # Modify the container_image_manifest.json to update container registry references
 if [ -f "$parent_dir/$manifest_file" ]; then
     echo "Replacing container registry in container_image_manifest.json"
-    sed -i "s|biocontainers/|quay.io/biocontainers/|g" "$parent_dir/$manifest_file"
+    sed -i "s|biocontainers/|quay/biocontainers/|g" "$parent_dir/$manifest_file"
 
     # Replace specific container registry reference
     echo "Replacing nf-core/ubuntu:20.04 in container_image_manifest.json"
-    sed -i "s|nf-core/ubuntu:20.04|quay.io/nf-core/ubuntu:20.04|g" "$parent_dir/$manifest_file"
+    sed -i "s|nf-core/ubuntu:20.04|quay/nf-core/ubuntu:20.04|g" "$parent_dir/$manifest_file"
 
-    # Replace redundant quay.io/quay.io/ with quay.io/
-    echo "Replacing redundant quay.io/quay.io/ with quay.io/ in container_image_manifest.json"
-    sed -i "s|quay.io/quay.io/|quay.io/|g" "$parent_dir/$manifest_file"
+    # Replace redundant quay.io/quay.io/ with quay/
+    echo "Replacing redundant quay.io/quay.io/ with quay/ in container_image_manifest.json"
+    sed -i "s|quay.io/quay.io/|quay/|g" "$parent_dir/$manifest_file"
 
-    # Replace "ubuntu:20.04" with "quay.io/nf-core/ubuntu:20.04"
-    echo "Replacing ubuntu:20.04 with quay.io/nf-core/ubuntu:20.04 in container_image_manifest.json"
-    sed -i "s|ubuntu:20.04|quay.io/nf-core/ubuntu:20.04|g" "$parent_dir/$manifest_file"
+    # Replace "ubuntu:20.04" with "quay/nf-core/ubuntu:20.04"
+    echo "Replacing ubuntu:20.04 with quay/nf-core/ubuntu:20.04 in container_image_manifest.json"
+    sed -i "s|ubuntu:20.04|quay/nf-core/ubuntu:20.04|g" "$parent_dir/$manifest_file"
 else
     echo "Warning: $manifest_file not found in $parent_dir. Skipping container registry replacement."
 fi
@@ -81,10 +81,11 @@ if [ -f "$nextflow_config_file" ]; then
     echo "Processing nextflow.config to comment out registry lines"
 
     # Use sed to comment out each registry line
-    sed -i 's/^\(apptainer\.registry[[:space:]]*=[[:space:]]*'\''quay\.io'\''\)/\/\/ \1/' "$nextflow_config_file" && echo "Commenting out apptainer.registry in nextflow.config"
-    sed -i 's/^\(docker\.registry[[:space:]]*=[[:space:]]*'\''quay\.io'\''\)/\/\/ \1/' "$nextflow_config_file" && echo "Commenting out docker.registry in nextflow.config"
-    sed -i 's/^\(podman\.registry[[:space:]]*=[[:space:]]*'\''quay\.io'\''\)/\/\/ \1/' "$nextflow_config_file" && echo "Commenting out podman.registry in nextflow.config"
-    sed -i 's/^\(singularity\.registry[[:space:]]*=[[:space:]]*'\''quay\.io'\''\)/\/\/ \1/' "$nextflow_config_file" && echo "Commenting out singularity.registry in nextflow.config"
+    sed -i 's/^\(apptainer\.registry[[:space:]]*=[[:space:]]*'\''quay'\''\)/\/\/ \1/' "$nextflow_config_file" && echo "Commenting out apptainer.registry in nextflow.config"
+    sed -i 's/^\(docker\.registry[[:space:]]*=[[:space:]]*'\''quay'\''\)/\/\/ \1/' "$nextflow_config_file" && echo "Commenting out docker.registry in nextflow.config"
+    sed -i 's/^\(podman\.registry[[:space:]]*=[[:space:]]*'\''quay'\''\)/\/\/ \1/' "$nextflow_config_file" && echo "Commenting out podman.registry in nextflow.config"
+    sed -i 's/^\(singularity\.registry[[:space:]]*=[[:space:]]*'\''quay'\''\)/\/\/ \1/' "$nextflow_config_file" && echo "Commenting out singularity.registry in nextflow.config"
 else
     echo "Warning: $nextflow_config_file not found. Skipping registry updates."
 fi
+
