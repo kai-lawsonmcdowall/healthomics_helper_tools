@@ -1,3 +1,6 @@
+This is a significant evolution a previous repo - (healthomics_parameter_creator)[https://github.com/kai-lawsonmcdowall/healthomics_parameter_creator]
+
+
 # Utility scripts for AWS HealthOmics
 
 This is a workflow designed to streamline the process of preparing, uploading and testing NF-core workflows onto AWS HealthOmics. It is based off of this [Workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/76d4a4ff-fe6f-436a-a1c2-f7ce44bc5d17/en-US/workshop/project-setup) provided by AWS.
