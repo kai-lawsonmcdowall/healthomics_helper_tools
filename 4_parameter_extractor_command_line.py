@@ -142,6 +142,10 @@ def create_parameters_json(nextflow_schema, nf_core_params_url, json_output_path
         "validationShowHiddenParams",
         "validationFailUnrecognisedParams",
         "validationLenientMode",
+        "pipelines_testdata_base_path",
+        "genome",
+        "igenomes_base",
+        "igenomes_ignore"
     ]
 
     # Filter out excluded parameters
@@ -168,7 +172,7 @@ def main():
     print("Please provide the required inputs:")
 
     nextflow_schema = input(
-        f"Path to the Nextflow schema JSON file (default: nextflow_schema.py in parent directory): "
+        f"Path to the Nextflow schema JSON file (default: nextflow_schema.json in parent directory): "
     ).strip()
     nf_core_params_url = input(
         "URL of the nf-core parameters page of the workflow: "

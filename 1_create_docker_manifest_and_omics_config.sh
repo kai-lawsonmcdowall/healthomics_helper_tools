@@ -9,7 +9,7 @@ default_manifest_file="container_image_manifest.json"
 public_registry_file="$script_dir/public_registry_properties.json"
 config_file="$parent_dir/omics.config"
 nextflow_config_file="$parent_dir/nextflow.config"
-default_region="us-west-2"
+default_region="eu-west-2"
 
 # Prompt the user for the manifest file name
 read -p "Enter the name for the output manifest file (default: $default_manifest_file): " manifest_file

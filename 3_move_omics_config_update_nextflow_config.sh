@@ -25,14 +25,19 @@ else
     exit 1
 fi
 
-# Check if nextflow.config exists in the parent directory
 if [ -f "$nextflow_config_file" ]; then
-    # Append the line to nextflow.config
-    echo "Appending includeConfig 'conf/omics.config' to $nextflow_config_file"
-    echo "includeConfig 'conf/omics.config'" >> "$nextflow_config_file"
+    # Check if the line already exists
+    if grep -Fxq "includeConfig 'conf/omics.config'" "$nextflow_config_file"; then
+        echo "The line 'includeConfig \"conf/omics.config\"' already exists in $nextflow_config_file."
+    else
+        # Append the line to nextflow.config
+        echo "Appending includeConfig 'conf/omics.config' to $nextflow_config_file"
+        echo "includeConfig 'conf/omics.config'" >> "$nextflow_config_file"
+    fi
 else
     echo "Error: $nextflow_config_file not found."
     exit 1
 fi
 
 echo "Script completed successfully."
+
