@@ -16,7 +16,7 @@ read -p "Enter the name of the ZIP file (without extension): " ZIP_FILE_NAME
 read -p "Enter the name of the pipeline: " PIPELINE_NAME
 
 # Prompt for S3 path, defaulting to a specific path if not provided
-DEFAULT_S3_PATH="s3://dev-sonrai-pipelines/workflows/"
+DEFAULT_S3_PATH=""
 read -p "Enter the S3 path to upload the ZIP file (default: $DEFAULT_S3_PATH): " S3_PATH
 S3_PATH=${S3_PATH:-$DEFAULT_S3_PATH}
 
