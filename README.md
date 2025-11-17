@@ -4,7 +4,7 @@
 
 This is a workflow designed to streamline the process of preparing, uploading and testing NF-core workflows onto AWS HealthOmics. It is based off of this [Workshop](https://catalog.us-east-1.prod.workshops.aws/workshops/76d4a4ff-fe6f-436a-a1c2-f7ce44bc5d17/en-US/workshop/project-setup) provided by AWS.
 
-Prior to running this, please make sure that you have the correct aws credentials to do this (for example, aws_access_key_id and aws_secret_access_key) and that it is in the correct location (usually home dir under .aws/credentials) as well as the correct region set. I generally recommend changing as few of the defaults values as possible. There are several default values that are not defined as empty in the scripts:
+Prior to running this, please make sure that you have the correct aws credentials to do this (for example, `aws_access_key_id` and `aws_secret_access_key`) and that it is in the correct location (usually home dir under `.aws/credentials`) as well as the correct region set. I generally recommend changing as few of the defaults values as possible. There are several default values that are not defined as empty in the scripts:
 
 - `default_region` (currently eu-west-2) in 1_create_docker_manifest_and_omics_config.sh
 - `DEFAULT_S3_PATH` in script 5_deploy_pipeline_to_aws_images.png
