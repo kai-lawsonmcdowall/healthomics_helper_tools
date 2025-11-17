@@ -18,7 +18,7 @@ The healthomics_helper_tools is a collection of AWS Omics and custom functions t
 ## 1_create_docker_manifest_and_omics_config.sh
 
 <br>
-This creates a custom nextflow config called omics.config, which defines the containers that need to be used for the different processes. The docker manifest further defines the set of docker containers. Please make sure the public_registry_properties.json is present in the healthomics_helper_tools.
+This creates a custom nextflow config called omics.config, which defines the containers that need to be used for the different processes. The docker manifest further defines the set of docker containers. Please make sure the public_registry_properties.json is present in the healthomics_helper_tools. The container substitutions JSON file allows you to explicitly overwrite container paths in the container_images_manifest.json with your own path. s
 <br><br>
 This will create the above files, update the nextflow version in the omics.config (to 23.1 for now), and comment out specific lines in the nextflow.config pertaining to other registries. 
 <br>
