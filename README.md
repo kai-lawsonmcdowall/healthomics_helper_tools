@@ -13,7 +13,16 @@ That you will likely be better off setting yourself if you are frequently upload
 
 # Custom helper functions
 
-The healthomics_helper_tools is a collection of AWS Omics and custom functions that streamlines the preparation of nf-core pipelines onto healthomics. The scripts below should prompt you for values, but will often specify defaults as is. **Place the healthomics_helper_functions in the parent directory of the nf-core pipeline, then cd into it, and execute the scripts in order (1 to 5)**
+The healthomics_helper_tools is a collection of AWS Omics and custom functions that streamlines the preparation of nf-core pipelines onto healthomics. The scripts below should prompt you for values, but will often specify defaults as is. **Place the healthomics_helper_functions in the parent directory of the nf-core pipeline, then cd into it, and execute the scripts in order (1 to 5)**, for example:
+
+```
+# The nf-core RNAseq pipeline.
+
+git pull https://github.com/nf-core/rnaseq.git
+cd rnaseq
+git pull https://github.com/kai-lawsonmcdowall/healthomics_helper_tools.git
+cd healthomics_helper_tools
+```
 
 ## 1_create_docker_manifest_and_omics_config.sh
 
