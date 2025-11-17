@@ -34,43 +34,45 @@ EXCLUDE_PARAMETERS = {
     "pipelines_testdata_base_path",
     "genome",
     "igenomes_base",
-    "igenomes_ignore"
+    "igenomes_ignore",
 }
 
 # Get input path with default handling
-input_path = input(f"Enter path to nextflow_schema.json [default: {default_input_path}]: ").strip()
+input_path = input(
+    f"Enter path to nextflow_schema.json [default: {default_input_path}]: "
+).strip()
 input_path = Path(input_path) if input_path else default_input_path
 
 # Read and parse the input JSON file
-with open(input_path, 'r') as f:
+with open(input_path, "r") as f:
     schema = json.load(f)
 
 processed_params = {}
 
 # Iterate through each definition in the $defs section
 for def_name, def_content in schema.get("$defs", {}).items():
-    if isinstance(def_content, dict) and 'properties' in def_content:
-        required_params = def_content.get('required', [])
-        properties = def_content['properties']
+    if isinstance(def_content, dict) and "properties" in def_content:
+        required_params = def_content.get("required", [])
+        properties = def_content["properties"]
 
         # Process each parameter in the properties
         for param, details in properties.items():
             # Skip excluded and deprecated parameters
             if param in EXCLUDE_PARAMETERS:
                 continue
-            if details.get('deprecated', False):
+            if details.get("deprecated", False):
                 continue
 
-            description = details.get('description', '')
+            description = details.get("description", "")
             optional = param not in required_params
 
             processed_params[param] = {
-                'description': description.strip(),
-                'optional': optional
+                "description": description.strip(),
+                "optional": optional,
             }
 
 # Write to default output path
-with open(default_output_path, 'w') as f:
+with open(default_output_path, "w") as f:
     json.dump(processed_params, f, indent=4)
 
 print(f"\nProcessed {len(processed_params)} parameters")
