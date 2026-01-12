@@ -39,7 +39,7 @@ def prompt_and_replace(file_path, default_replacement):
     )
     replace_string = (
         input(
-            f"Enter the string you want to replace it with (default (initially empty): {default_replacement}): "
+            f"Enter the string you want to replace it with (include /) (default (initially empty): {default_replacement}): "
         )
         or default_replacement
     )
