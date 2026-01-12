@@ -226,10 +226,8 @@ class NextflowWorkflow:
                 )
 
                 process_configs += [
-                    (
-                        _tpl.replace("::process.name::", process.name).replace(
-                            "::process.container.uri::", container_uri
-                        )
+                    _tpl.replace("::process.name::", process.name).replace(
+                        "::process.container.uri::", container_uri
                     )
                 ]
 
@@ -301,6 +299,13 @@ class NextflowProcess:
 
 
 def find_docker_uri(container: str) -> dict:
+    # Handle non-string inputs
+    if not isinstance(container, str):
+        if container is None:
+            return None
+        # If it's already a dict or other type, try to handle gracefully
+        return str(container) if container else None
+
     # check if provided a quoted string and strip bounding quotes
     match = re.match("^(['\"])", container)
     if match:

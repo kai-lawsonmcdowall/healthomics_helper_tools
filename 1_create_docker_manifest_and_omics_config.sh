@@ -57,9 +57,9 @@ echo "Running inspect_nf.py..."
 # Update Nextflow minimum version in omics.config
 # ---------------------------------------
 if [[ -f "$config_file" ]]; then
-    echo "Updating omics.config to require Nextflow >= 23.10.0"
+    echo "Updating omics.config to require Nextflow >= 24.10.8"
     sed -i \
-        "s/nextflowVersion = '!*>=22\.04\.0'/nextflowVersion = '!>=23.10.0'/" \
+        "s/nextflowVersion = '!*>=22\.04\.0'/nextflowVersion = '!>=24.10.8'/" \
         "$config_file"
 else
     echo "WARNING: $config_file not found! Skipping update."
@@ -80,6 +80,10 @@ if [[ -f "$nextflow_config_file" ]]; then
     sed -i "s/^\(docker\.registry\s*=\s*'.*'\)/\/\/ \1/" "$nextflow_config_file"
     sed -i "s/^\(podman\.registry\s*=\s*'.*'\)/\/\/ \1/" "$nextflow_config_file"
     sed -i "s/^\(singularity\.registry\s*=\s*'.*'\)/\/\/ \1/" "$nextflow_config_file"
+    sed -i "s/^\(charliecloud\.registry\s*=\s*'.*'\)/\/\/ \1/" "$nextflow_config_file"
+    
+    
+    
 else
     echo "WARNING: $nextflow_config_file not found!"
 fi
