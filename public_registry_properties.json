@@ -58,8 +58,5 @@
     "dockerhub": { 
         "namespace": "dockerhub", 
         "pull_through": false 
-    },
-    "community.wave.seqera.io": { 
-        "namespace": "wave", 
-        "pull_through": false }
+    }s
 }
