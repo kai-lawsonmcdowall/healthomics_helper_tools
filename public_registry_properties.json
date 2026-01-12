@@ -58,5 +58,5 @@
     "dockerhub": { 
         "namespace": "dockerhub", 
         "pull_through": false 
-    }s
+    }
 }
