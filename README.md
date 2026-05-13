@@ -105,6 +105,40 @@ s3://path/where/I/want/my/fastqs/and/samplesheet.
 
 ```
 
+## 7_execute_pipeline.sh
+
+<br>
+This script is an interactive launcher for submitting a workflow run to AWS HealthOmics. Once you have a deployed workflow (from script 5) and test data in S3 (from script 6), use this script to kick off an actual pipeline run without having to manually construct the `aws omics start-run` command.
+
+**Required inputs (must be provided — the script will exit if omitted):**
+
+| Input | Description |
+|---|---|
+| Workflow ID | The HealthOmics workflow ID created by script 5 |
+| Run name prefix | A short label prepended to the run name; a timestamp is appended automatically |
+| Parameters JSON S3 URI | S3 path to the `params.json` file for the run |
+
+**Optional inputs (press Enter to accept the defaults):**
+
+| Input | Default |
+|---|---|
+| IAM Role ARN | `arn:aws:iam::512620729442:role/dev-omicsWorkflowRun-role` |
+| AWS Region | `eu-west-2` |
+| Output S3 URI | `s3://dev-sonrai-pipelines/omics-output/` |
+| Storage Capacity (GiB) | `1200` |
+| Log Level | `ALL` |
+
+After collecting inputs the script will:
+
+1. Display a summary of the full configuration for review.
+2. Verify that the AWS CLI is installed.
+3. Download the parameters JSON from S3 to a temporary local file.
+4. Submit the workflow run via `aws omics start-run`.
+5. Print the resulting **Run ID**, a monitoring command, and a direct link to the AWS Console run page.
+
+<br><br>
+![The prompts expected by 7_execute_pipeline.sh — values shown in square brackets are the defaults](/images/7_execute_pipeline.png)
+
 # AWS Specific functions
 
 These are scripts that support using AWS HealthOmics
