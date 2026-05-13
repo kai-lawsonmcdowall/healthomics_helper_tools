@@ -4,7 +4,6 @@ from os import path
 from textwrap import dedent
 import warnings
 
-
 __NF_DIRECTIVES: str = """
     accelerator,afterScript,
     beforeScript,
@@ -226,15 +225,12 @@ class NextflowWorkflow:
                 )
 
                 process_configs += [
-                    (
-                        _tpl.replace("::process.name::", process.name).replace(
-                            "::process.container.uri::", container_uri
-                        )
+                    _tpl.replace("::process.name::", process.name).replace(
+                        "::process.container.uri::", container_uri
                     )
                 ]
 
-        config = dedent(
-            """\
+        config = dedent("""\
             params {
                 ecr_registry = ':::ecr_registry:::'
                 outdir = '/mnt/workflow/pubdir'
@@ -257,8 +253,7 @@ class NextflowWorkflow:
             withName: '.*' { conda = null }
             :::process_configs:::
             }
-            """
-        )
+            """)
         config = config.replace(":::ecr_registry:::", ecr_registry)
         config = config.replace(":::process_configs:::", "\n".join(process_configs))
 
@@ -301,6 +296,13 @@ class NextflowProcess:
 
 
 def find_docker_uri(container: str) -> dict:
+    # Handle non-string inputs
+    if not isinstance(container, str):
+        if container is None:
+            return None
+        # If it's already a dict or other type, try to handle gracefully
+        return str(container) if container else None
+
     # check if provided a quoted string and strip bounding quotes
     match = re.match("^(['\"])", container)
     if match:
